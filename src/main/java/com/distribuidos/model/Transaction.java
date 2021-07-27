@@ -1,25 +1,32 @@
 package com.distribuidos.model;
 
+import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
+
 import java.util.Date;
 
+@Document(collection = "transaction", schemaVersion= "1.0")
 public class Transaction {
+    @Id
     int id;
     float amount;
     Date date;
     String desc;
-    Account source;
-    Account destination;
+    int sourceNumber;
+    int destinationNumber;
+    String type;
 
     public Transaction() {
     }
 
-    public Transaction(int id, float amount, Date date, String desc, Account source, Account destination) {
+    public Transaction(int id, float amount, Date date, String desc, int sourceNumber, int destinationNumber, String type) {
         this.id = id;
         this.amount = amount;
         this.date = date;
         this.desc = desc;
-        this.source = source;
-        this.destination = destination;
+        this.sourceNumber = sourceNumber;
+        this.destinationNumber = destinationNumber;
+        this.type = type;
     }
 
     public int getId() {
@@ -54,19 +61,27 @@ public class Transaction {
         this.desc = desc;
     }
 
-    public Account getSource() {
-        return source;
+    public int getSourceNumber() {
+        return sourceNumber;
     }
 
-    public void setSource(Account source) {
-        this.source = source;
+    public void setSourceNumber(int sourceNumber) {
+        this.sourceNumber = sourceNumber;
     }
 
-    public Account getDestination() {
-        return destination;
+    public int getDestinationNumber() {
+        return destinationNumber;
     }
 
-    public void setDestination(Account destination) {
-        this.destination = destination;
+    public void setDestinationNumber(int destinationNumber) {
+        this.destinationNumber = destinationNumber;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

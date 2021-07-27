@@ -1,21 +1,24 @@
 package com.distribuidos.model;
 
+import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
+
 import java.util.List;
 
+@Document(collection = "account", schemaVersion= "1.0")
 public class Account {
+    @Id
     int number;
     float current_balance;
-    User user;
-    List<Transaction> recibidas;
-    List<Transaction> realizadas;
+    String user_id;
 
     public Account() {
     }
 
-    public Account(int number, float current_balance, User user) {
+    public Account(int number, float current_balance, String user_id) {
         this.number = number;
         this.current_balance = current_balance;
-        this.user = user;
+        this.user_id = user_id;
     }
 
     public int getNumber() {
@@ -34,27 +37,11 @@ public class Account {
         this.current_balance = current_balance;
     }
 
-    public User getUser() {
-        return user;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Transaction> getRecibidas() {
-        return recibidas;
-    }
-
-    public void setRecibidas(List<Transaction> recibidas) {
-        this.recibidas = recibidas;
-    }
-
-    public List<Transaction> getRealizadas() {
-        return realizadas;
-    }
-
-    public void setRealizadas(List<Transaction> realizadas) {
-        this.realizadas = realizadas;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 }
