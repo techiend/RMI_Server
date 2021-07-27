@@ -1,7 +1,7 @@
-package com.carlosverde;
+package com.distribuidos;
 
-import com.carlosverde.implementation.AccountImplementation;
-import com.carlosverde.implementation.TransactionalImplementation;
+import com.distribuidos.implementation.AccountImplementation;
+import com.distribuidos.implementation.TransactionalImplementation;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;

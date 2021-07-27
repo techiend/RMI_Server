@@ -1,4 +1,4 @@
-package com.carlosverde.model;
+package com.distribuidos.model;
 
 public class Deposit extends Transaction{
 }

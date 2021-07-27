@@ -1,8 +1,8 @@
-package com.carlosverde.implementation;
+package com.distribuidos.implementation;
 
-import com.carlosverde.model.Account;
-import com.carlosverde.model.User;
-import com.carlosverde.service.AccountService;
+import com.distribuidos.model.Account;
+import com.distribuidos.model.User;
+import com.distribuidos.service.AccountService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

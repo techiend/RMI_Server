@@ -1,4 +1,4 @@
-package com.carlosverde.model;
+package com.distribuidos.model;
 
 import java.util.Date;
 

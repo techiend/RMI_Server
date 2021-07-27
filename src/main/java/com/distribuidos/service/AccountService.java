@@ -1,7 +1,7 @@
-package com.carlosverde.service;
+package com.distribuidos.service;
 
-import com.carlosverde.model.Account;
-import com.carlosverde.model.User;
+import com.distribuidos.model.Account;
+import com.distribuidos.model.User;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

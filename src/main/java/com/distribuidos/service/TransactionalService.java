@@ -1,9 +1,9 @@
-package com.carlosverde.service;
+package com.distribuidos.service;
 
-import com.carlosverde.model.Deposit;
-import com.carlosverde.model.Transaction;
-import com.carlosverde.model.Transference;
-import com.carlosverde.model.Withdrawal;
+import com.distribuidos.model.Deposit;
+import com.distribuidos.model.Transaction;
+import com.distribuidos.model.Transference;
+import com.distribuidos.model.Withdrawal;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
