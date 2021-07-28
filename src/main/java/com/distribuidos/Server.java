@@ -1,7 +1,6 @@
 package com.distribuidos;
 
-import com.distribuidos.implementation.AccountImplementation;
-import com.distribuidos.implementation.TransactionalImplementation;
+import com.distribuidos.service.AccountService;
 
 import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
@@ -17,6 +16,14 @@ public class Server {
             Naming.rebind("//localhost:8808/transactional", transactionalImplementation);
             Naming.rebind("//localhost:8808/account", accountImplementation);
             System.out.println("Servidor activo...");
+
+
+            // Exporting the object of implementation class
+            // (here we are exporting the remote object to the stub)
+//            AccountService stub = accountImplementation;
+//
+//            Naming.rebind("//localhost:8808/account", stub);
+//            System.out.println("Servidor activo...");
 
         }
         catch (Exception e) {

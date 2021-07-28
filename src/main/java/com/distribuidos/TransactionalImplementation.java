@@ -1,4 +1,4 @@
-package com.distribuidos.implementation;
+package com.distribuidos;
 
 import com.distribuidos.model.Deposit;
 import com.distribuidos.model.Transaction;
@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 public class TransactionalImplementation extends UnicastRemoteObject implements TransactionalService {
-    public TransactionalImplementation() throws RemoteException{}
+    TransactionalImplementation() throws RemoteException{}
     public Transaction doDeposit(Deposit deposit) throws RemoteException {
         return null;
     }
