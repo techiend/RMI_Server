@@ -15,6 +15,9 @@ public class Account {
     float current_balance;
     String user_id;
 
+    public Account() {
+    }
+
     public Account(String user_id) {
         setNumber();
         this.user_id = user_id;
@@ -27,8 +30,13 @@ public class Account {
     private void setNumber() {
         JsonDBTemplate jsonDBTemplate = JsonDB.getDB();
         List<Account> accounts = jsonDBTemplate.findAll( Account.class);
-        Account last = accounts.get(accounts.size()-1);
-        this.number = last.getNumber()+1;
+        if (accounts.size()>0) {
+            Account last = accounts.get(accounts.size() - 1);
+            this.number = last.getNumber() + 1;
+        }
+        else {
+            this.number = 1;
+        }
     }
 
     public float getCurrent_balance() {
