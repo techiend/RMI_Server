@@ -1,8 +1,10 @@
 package com.distribuidos;
 
 import com.distribuidos.model.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsondb.JsonDBTemplate;
 
+import java.util.Date;
 import java.util.List;
 
 public class Test {
@@ -38,11 +40,13 @@ public class Test {
             if (jsonDBTemplate.getCollection(Transaction.class) == null)
                 jsonDBTemplate.createCollection(Transaction.class);
 
-            List<Account> accounts = jsonDBTemplate.findAll( Account.class);
 
-            Account last = accounts.get(accounts.size()-1);
+            String transactionQuery = String.format("/.[sourceNumber='%s' or destinationNumber='%s']", 1, 1);
+            List<Transaction> transactions = jsonDBTemplate.find(transactionQuery, Transaction.class);
 
-            System.out.println(last.getNumber());
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonInString = mapper.writeValueAsString(transactions);
+            System.out.println(jsonInString);
 
         }
         catch (Exception e){

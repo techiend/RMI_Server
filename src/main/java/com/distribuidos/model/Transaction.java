@@ -1,9 +1,12 @@
 package com.distribuidos.model;
 
+import com.distribuidos.datastorage.JsonDB;
+import io.jsondb.JsonDBTemplate;
 import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "transaction", schemaVersion= "1.0")
 public class Transaction {
@@ -19,8 +22,8 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(int id, float amount, Date date, String desc, int sourceNumber, int destinationNumber, String type) {
-        this.id = id;
+    public Transaction(float amount, Date date, String desc, int sourceNumber, int destinationNumber, String type) {
+        setId();
         this.amount = amount;
         this.date = date;
         this.desc = desc;
@@ -33,8 +36,16 @@ public class Transaction {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    private void setId() {
+        JsonDBTemplate jsonDBTemplate = JsonDB.getDB();
+        List<Transaction> transactions = jsonDBTemplate.findAll( Transaction.class);
+        if (transactions.size()>0) {
+            Transaction last = transactions.get(transactions.size() - 1);
+            this.id = last.getId() + 1;
+        }
+        else {
+            this.id = 1;
+        }
     }
 
     public float getAmount() {
