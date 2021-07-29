@@ -1,1 +1,6 @@
 {"schemaVersion":"1.0"}
+{"id":1,"amount":5000.0,"date":1627573654869,"desc":"Prueba 1..","sourceNumber":0,"destinationNumber":1,"type":"Deposit"}
+{"id":2,"amount":2000.0,"date":1627573689470,"desc":"Prueba 2..","sourceNumber":0,"destinationNumber":2,"type":"Deposit"}
+{"id":3,"amount":500.0,"date":1627573707172,"desc":"Prueba 3..","sourceNumber":0,"destinationNumber":3,"type":"Deposit"}
+{"id":4,"amount":100.0,"date":1627573714445,"desc":"Prueba 4..","sourceNumber":1,"destinationNumber":3,"type":"Transference"}
+{"id":5,"amount":100.0,"date":1627573722508,"desc":"Prueba 5..","sourceNumber":3,"destinationNumber":1,"type":"Transference"}
