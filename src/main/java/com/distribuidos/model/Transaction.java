@@ -22,10 +22,10 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(float amount, Date date, String desc, int sourceNumber, int destinationNumber, String type) {
+    public Transaction(float amount, String desc, int sourceNumber, int destinationNumber, String type) {
         setId();
         this.amount = amount;
-        this.date = date;
+        this.date = new Date();
         this.desc = desc;
         this.sourceNumber = sourceNumber;
         this.destinationNumber = destinationNumber;

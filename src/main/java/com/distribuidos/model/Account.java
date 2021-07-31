@@ -11,7 +11,7 @@ import java.util.Random;
 @Document(collection = "account", schemaVersion= "1.0")
 public class Account {
     @Id
-    int number;
+    int number;//este es el id <-----
     float current_balance;
     String user_id;
 

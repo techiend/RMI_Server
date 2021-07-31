@@ -1,19 +1,58 @@
 package com.distribuidos;
 
-import com.distribuidos.model.Deposit;
-import com.distribuidos.model.Transaction;
-import com.distribuidos.model.Transference;
-import com.distribuidos.model.Withdrawal;
+import com.distribuidos.datastorage.JsonDB;
+import com.distribuidos.datastorage.Utilidades;
+import com.distribuidos.inOutObjects.OpenAccountOutput;
+import com.distribuidos.inOutObjects.Response;
+import com.distribuidos.model.*;
 import com.distribuidos.service.TransactionalService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsondb.JsonDBTemplate;
+import io.jsondb.query.Update;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class TransactionalImplementation extends UnicastRemoteObject implements TransactionalService {
     TransactionalImplementation() throws RemoteException{}
-    public Transaction doDeposit(Deposit deposit) throws RemoteException {
-        return null;
+
+    public Integer doDeposit(int destino, float monto, String descrip) throws RemoteException {
+
+        JsonDBTemplate jsonDBTemplate = JsonDB.getDB();
+
+        Account account = jsonDBTemplate.findById(destino, Account.class);
+
+        float actual = 0;
+
+        if (account == null){
+            return 0;
+        }
+        else{
+            actual = account.getCurrent_balance(); // 7000
+            float montoFinal = monto + actual;
+
+            Update update = Update.update("current_balance",montoFinal);
+
+            String jxQuery = String.format("/.[number=%d]", destino);
+            Account finalAccount = jsonDBTemplate.findAndModify(jxQuery, update, Account.class);
+
+            Deposit deposit = new Deposit(monto,descrip, 0, destino);
+//            deposit.setAmount(monto);
+//            deposit.setDate(new Date());
+//            deposit.setDesc(descrip);
+//            deposit.setDestinationNumber(destino);
+//            deposit.setSourceNumber(0);
+//            deposit.setType("Deposit");
+
+            jsonDBTemplate.insert(deposit);
+
+            return 1;
+        }
     }
+
     public Transaction doWithdrawal(Withdrawal withdrawal) throws RemoteException {
         return null;
     }

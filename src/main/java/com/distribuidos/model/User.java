@@ -1,8 +1,13 @@
 package com.distribuidos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 
+import java.util.List;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Document(collection = "user", schemaVersion= "1.0")
 public class User {
     @Id

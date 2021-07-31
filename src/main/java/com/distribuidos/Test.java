@@ -41,12 +41,10 @@ public class Test {
                 jsonDBTemplate.createCollection(Transaction.class);
 
 
-            String transactionQuery = String.format("/.[sourceNumber='%s' or destinationNumber='%s']", 1, 1);
-            List<Transaction> transactions = jsonDBTemplate.find(transactionQuery, Transaction.class);
 
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonInString = mapper.writeValueAsString(transactions);
-            System.out.println(jsonInString);
+            Deposit deposit = new Deposit(100,"descrip", 0, 6);
+
+            jsonDBTemplate.insert(deposit);
 
         }
         catch (Exception e){

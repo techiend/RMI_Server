@@ -9,7 +9,7 @@ public class Transference extends Transaction{
     public Transference() {
     }
 
-    public Transference(float amount, Date date, String desc, int sourceNumber, int destinationNumber) {
-        super(amount, date, desc, sourceNumber, destinationNumber, "Transference");
+    public Transference(float amount, String desc, int sourceNumber, int destinationNumber) {
+        super(amount, desc, sourceNumber, destinationNumber, "Transference");
     }
 }
