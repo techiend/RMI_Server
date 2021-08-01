@@ -56,7 +56,36 @@ public class TransactionalImplementation extends UnicastRemoteObject implements 
     public Transaction doWithdrawal(Withdrawal withdrawal) throws RemoteException {
         return null;
     }
-    public Transaction doTransference(Transference transference) throws RemoteException {
-        return null;
+    public Integer doTransference(  float amount, String description, int originAccount, int destinationAccount ) throws RemoteException {
+    	
+    	JsonDBTemplate jsonDBTemplate = JsonDB.getDB();
+    	
+    	Account accountOrigin = jsonDBTemplate.findById( originAccount, Account.class);
+    	Account accountDestination = jsonDBTemplate.findById( destinationAccount, Account.class);
+    	
+    	if (accountOrigin == null || accountDestination == null ){
+            return 0;
+        } else if (accountOrigin.getCurrent_balance() < amount) {
+        	return -1;
+        } else {
+        	float newBalanceOrigin = accountOrigin.getCurrent_balance() - amount;
+        	float newBalanceDestination = accountDestination.getCurrent_balance() + amount;
+        	
+        	Update updateOrigin = Update.update( "current_balance", newBalanceOrigin );
+        	Update updateDestination = Update.update( "current_balance", newBalanceDestination );
+        	
+        	String jxQueryOrigin = String.format("/.[number=%d]", originAccount );
+        	String jxQueryDestination = String.format("/.[number=%d]", destinationAccount );
+        	
+            Account finalAccountOrigin = jsonDBTemplate.findAndModify(jxQueryOrigin, updateOrigin, Account.class);
+            Account finalAccountDestination = jsonDBTemplate.findAndModify(jxQueryDestination, updateDestination, Account.class);
+            
+            Transference transference = new Transference( amount, description, originAccount, destinationAccount );
+            
+            jsonDBTemplate.insert( transference );
+        	
+        	return 1;
+        }
+
     }
 }

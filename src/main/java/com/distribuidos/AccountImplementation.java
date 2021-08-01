@@ -226,4 +226,62 @@ public class AccountImplementation extends UnicastRemoteObject implements Accoun
         }
         return Utilidades.generateResponse(response);
     }
+    
+    public String getAccountUid(int number) throws RemoteException {
+        Response response = new Response();
+        try{
+            JsonDBTemplate jsonDBTemplate = JsonDB.getDB();
+
+            if (number <= 0){
+                response.setCod(1);
+                response.setMsg("Numero de cuenta no es válido");
+                return Utilidades.generateResponse(response);
+            }
+
+            Account account = jsonDBTemplate.findById(number, Account.class);
+
+            if (account != null){
+
+                response.setCod(0);
+                response.setMsg("Cuenta existente");
+                response.setData( account.getUser_id() );
+
+            }
+            else{
+                response.setCod(1);
+                response.setMsg("Cuenta no existe.");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            response.setCod(99);
+            response.setMsg("Ha ocurrido un error: "+e.getLocalizedMessage());
+        }
+        return Utilidades.generateResponse(response);
+    }
+    
+    public String getUserName(String document_id) throws RemoteException {
+        Response response = new Response();
+        try{
+            JsonDBTemplate jsonDBTemplate = JsonDB.getDB();
+            User user = jsonDBTemplate.findById(document_id, User.class);
+
+            if (user != null){
+                response.setCod(0);
+                response.setMsg("Usuario existe.");
+                response.setData( user.getName() );
+            }
+            else{
+                response.setCod(1);
+                response.setMsg("Usuario no existe.");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            response.setCod(99);
+            response.setMsg("Ha ocurrido un error: "+e.getLocalizedMessage());
+        }
+
+        return Utilidades.generateResponse(response);
+    }
 }
