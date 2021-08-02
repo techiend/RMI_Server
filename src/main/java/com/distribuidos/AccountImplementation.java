@@ -7,6 +7,7 @@ import com.distribuidos.inOutObjects.OpenAccountOutput;
 import com.distribuidos.inOutObjects.Response;
 import com.distribuidos.inOutObjects.UserOutput;
 import com.distribuidos.model.Account;
+import com.distribuidos.model.Deposit;
 import com.distribuidos.model.Transaction;
 import com.distribuidos.model.User;
 import com.distribuidos.service.AccountService;
@@ -170,6 +171,9 @@ public class AccountImplementation extends UnicastRemoteObject implements Accoun
                 account.setCurrent_balance(montoInicial);
 
                 jsonDBTemplate.insert(account);
+
+                Deposit deposit = new Deposit(montoInicial,"Deposito inicial.", 0, account.getNumber());
+                jsonDBTemplate.insert(deposit);
 
                 response.setCod(0);
                 response.setMsg("Cuenta creada exitosamente.");
