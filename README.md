@@ -2,14 +2,14 @@
 # REQUERIMIENTOS
 
 1. JAVA 16
-2. Maven 3.6.3
+2. Maven 3.6.3 +
 
 # INSTRUCCIONES
 
 ## Compilación
 Una vez descargado el código fuente, ubicarse en la raiz del proyecto y ejecutar el comando:
 
-    ./mvnw clean package
+    mvn clean package
 
 Esto compilará el proyecto y creara el archivo .jar a ejecutar dentro del directorio:
 
