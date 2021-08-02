@@ -18,7 +18,6 @@ import java.util.List;
 
 public class TransactionalImplementation extends UnicastRemoteObject implements TransactionalService {
     TransactionalImplementation() throws RemoteException{}
-
     public Integer doDeposit(int destino, float monto, String descrip) throws RemoteException {
 
         JsonDBTemplate jsonDBTemplate = JsonDB.getDB();
@@ -52,9 +51,63 @@ public class TransactionalImplementation extends UnicastRemoteObject implements 
             return 1;
         }
     }
+    public String doWithdrawal(float amount, int cuentaOrigen) throws RemoteException {
+        Response response = new Response();
+        try{
+            JsonDBTemplate jsonDBTemplate = JsonDB.getDB();
 
-    public Transaction doWithdrawal(Withdrawal withdrawal) throws RemoteException {
-        return null;
+            if (amount <= 0){
+                response.setCod(1);
+                response.setMsg("El monto introducido no es válido.");
+                return Utilidades.generateResponse(response);
+            }
+            if (cuentaOrigen <= 0){
+                response.setCod(1);
+                response.setMsg("La cuenta origen no es válida.");
+                return Utilidades.generateResponse(response);
+            }
+
+
+            Account findAccount = jsonDBTemplate.findById(cuentaOrigen, Account.class);
+
+            if (findAccount != null){
+
+                float actual = findAccount.getCurrent_balance();
+
+                if (amount <= actual) {
+
+                    float montoFinal = actual - amount;
+
+                    Update update = Update.update("current_balance",montoFinal);
+
+                    String jxQuery = String.format("/.[number=%d]", cuentaOrigen);
+                    Account finalAccount = jsonDBTemplate.findAndModify(jxQuery, update, Account.class);
+
+                    Withdrawal retiro = new Withdrawal(amount,"Retiro de cuenta",cuentaOrigen,0);
+
+                    jsonDBTemplate.insert(retiro);
+
+                    response.setCod(0);
+                    response.setMsg("Retiro realizado correctamente.");
+                    response.setData(montoFinal);
+                }
+                else {
+                    response.setCod(1);
+                    response.setMsg("Fondos insuficientes.");
+                }
+
+            }
+            else{
+                response.setCod(1);
+                response.setMsg("La cuenta seleccionada no existe.");
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            response.setCod(99);
+            response.setMsg("Ha ocurrido un error: "+e.getLocalizedMessage());
+        }
+        return Utilidades.generateResponse(response);
     }
     public Integer doTransference(  float amount, String description, int originAccount, int destinationAccount ) throws RemoteException {
     	
